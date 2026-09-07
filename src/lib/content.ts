@@ -63,43 +63,49 @@ export const store = {
 
 /**
  * 비공개 포토.
- * 시연용 이미지는 Unsplash 무료 사진입니다 (상업적 사용 허용, 출처 표기 불필요).
- * 실제 아티스트 사진으로 교체할 때는 /public 경로(예: "/photos/01.jpg")를 넣으면 됩니다.
- * `image`를 null로 두면 플레이스홀더 비주얼이 표시됩니다.
+ * `image`는 public 폴더 기준 경로입니다. 사진 파일을 public/photos/ 에 넣으세요.
+ * 확장자가 png·webp여도 여기 경로만 바꾸면 됩니다 (컴포넌트는 경로를 그대로 씁니다).
+ * 파일이 아직 없거나 경로가 틀리면 자동으로 샘플 비주얼이 대신 표시됩니다.
+ * `image`를 null로 두어도 샘플 비주얼이 표시됩니다.
  */
 export const privatePhotos: {
   id: number;
   caption: string;
   date: string;
   image: string | null;
+  /** 정사각 크롭에서 살릴 지점. 생략하면 가운데("center") */
+  objectPosition?: string;
 }[] = [
   {
     id: 1,
     caption: "DEADLINE 재킷 촬영 비하인드",
     date: "2025.11.02",
     // 핑크·퍼플 스테이지 조명
-    image: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=800&q=80",
+    image: "/photos/01.jpg",
   },
   {
     id: 2,
     caption: "안무 연습실, 첫 합",
     date: "2025.11.18",
     // 어둑한 연습실
-    image: "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=800&q=80",
+    image: "/photos/02.jpg",
   },
   {
     id: 3,
     caption: "뮤직비디오 세트 대기 중",
     date: "2025.12.05",
     // 무대 커튼 앞에서 대기하는 실루엣
-    image: "https://images.unsplash.com/photo-1503095396549-807759245b35?w=800&q=80",
+    // 이 파일만 확장자가 .jpeg 입니다
+    image: "/photos/03.jpeg",
+    // 원본 위쪽이 빈 벽이라 중앙 크롭하면 인물이 아래로 밀려 잘립니다
+    objectPosition: "50% 75%",
   },
   {
     id: 4,
     caption: "발매 전날 밤",
     date: "2026.01.14",
     // 밤 도시 거리
-    image: "https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=800&q=80",
+    image: "/photos/04.jpg",
   },
 ];
 

@@ -44,7 +44,7 @@ export default function WelcomeMessage({ onDone }: { onDone: () => void }) {
   const played = progress > 0;
 
   return (
-    <div className="flex flex-1 flex-col justify-between px-8 pt-16 pb-10">
+    <div className="flex min-h-0 flex-1 flex-col justify-between overflow-y-auto px-8 pt-16 pb-10">
       <div className="flex flex-1 flex-col justify-center">
         <p className="text-[13px] text-mute">
           No.{keyring.serialNumber.toLocaleString()} 등록 완료

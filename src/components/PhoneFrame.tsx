@@ -8,7 +8,7 @@ export default function PhoneFrame({
       {/* 데스크톱에서는 기기 목업으로, 모바일에서는 전체 화면으로 보입니다 */}
       <div
         className="
-          relative mx-auto flex min-h-dvh w-full flex-col overflow-hidden
+          relative mx-auto flex h-dvh w-full flex-col overflow-hidden
           bg-ink
           sm:min-h-0 sm:h-[860px] sm:w-[400px] sm:rounded-[44px]
           sm:border sm:border-white/10

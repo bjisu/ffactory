@@ -51,7 +51,7 @@ function Verified({ onRegister }: { onRegister: () => void }) {
   const remaining = keyring.totalIssued - keyring.serialNumber;
 
   return (
-    <div className="flex flex-1 flex-col justify-between px-8 pt-16 pb-10">
+    <div className="flex min-h-0 flex-1 flex-col justify-between overflow-y-auto px-8 pt-16 pb-10">
       <div className="flex flex-1 flex-col justify-center">
         {/* 인증 확인 */}
         <div className="rise flex items-center gap-2.5">

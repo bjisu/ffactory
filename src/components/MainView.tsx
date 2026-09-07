@@ -13,12 +13,20 @@ import { daysTogether, formatDate, type Ownership } from "@/lib/useOwnership";
 
 export default function MainView({ ownership }: { ownership: Ownership }) {
   const [openPhoto, setOpenPhoto] = useState<number | null>(null);
+  /** 파일이 아직 없거나 경로가 틀린 사진 — 샘플 비주얼로 되돌립니다 */
+  const [brokenPhotos, setBrokenPhotos] = useState<number[]>([]);
   const days = daysTogether(ownership.registeredAt);
   const photo = privatePhotos.find((p) => p.id === openPhoto) ?? null;
 
+  const markBroken = (id: number) =>
+    setBrokenPhotos((prev) => (prev.includes(id) ? prev : [...prev, id]));
+  /** 실제로 띄울 수 있는 경로만 돌려줍니다 */
+  const srcOf = (p: { id: number; image: string | null }) =>
+    p.image && !brokenPhotos.includes(p.id) ? p.image : null;
+
   return (
     <>
-      <div className="flex-1 overflow-y-auto px-6 pt-5 pb-10">
+      <div className="min-h-0 flex-1 overflow-y-auto px-6 pt-5 pb-10">
         {/* 소유 배지 */}
         <div className="flex items-center justify-between rounded-full border border-white/8 bg-ink-2 py-2.5 pl-4 pr-3.5">
           <span className="engrave foil text-[14px]">
@@ -109,20 +117,21 @@ export default function MainView({ ownership }: { ownership: Ownership }) {
               <button
                 key={p.id}
                 onClick={() => setOpenPhoto(p.id)}
-                className="group overflow-hidden rounded-2xl border border-white/8 text-left"
+                // flex-col이 없으면 브라우저가 버튼 내용을 세로 중앙에 두어
+                // 캡션 줄 수가 다른 카드끼리 사진 높이가 어긋납니다
+                className="group flex flex-col overflow-hidden rounded-2xl border border-white/8 text-left"
               >
-                <div className="grain relative aspect-[3/4]">
-                  {p.image ? (
+                {/* 사진이 없으면 grain 비주얼만 남습니다 */}
+                <div className="grain relative aspect-square">
+                  {srcOf(p) && (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
-                      src={p.image}
+                      src={srcOf(p)!}
                       alt={p.caption}
-                      className="h-full w-full object-cover"
+                      onError={() => markBroken(p.id)}
+                      style={{ objectPosition: p.objectPosition ?? "center" }}
+                      className="absolute inset-0 h-full w-full object-cover"
                     />
-                  ) : (
-                    <span className="absolute bottom-2.5 left-2.5 rounded-full bg-black/45 px-2 py-0.5 text-[10.5px] text-chalk/70">
-                      샘플
-                    </span>
                   )}
                 </div>
                 <p className="px-3 pb-3 pt-2.5 text-[12.5px] leading-snug text-chalk/85">
@@ -186,20 +195,25 @@ export default function MainView({ ownership }: { ownership: Ownership }) {
           >
             닫기
           </button>
-          <div className="grain mt-4 flex-1 overflow-hidden rounded-3xl border border-white/10">
-            {photo.image && (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={photo.image}
-                alt={photo.caption}
-                className="h-full w-full object-cover"
-              />
-            )}
+          {/* 사진과 설명을 한 덩어리로 묶어 화면 세로 중앙에 둡니다 */}
+          <div className="flex flex-1 flex-col justify-center">
+            <div className="grain relative aspect-square overflow-hidden rounded-3xl border border-white/10">
+              {srcOf(photo) && (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={srcOf(photo)!}
+                  alt={photo.caption}
+                  onError={() => markBroken(photo.id)}
+                  style={{ objectPosition: photo.objectPosition ?? "center" }}
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
+              )}
+            </div>
+            <p className="mt-5 text-[15px] font-medium text-chalk">
+              {photo.caption}
+            </p>
+            <p className="mt-1 text-[12.5px] text-mute">{photo.date}</p>
           </div>
-          <p className="mt-5 text-[15px] font-medium text-chalk">
-            {photo.caption}
-          </p>
-          <p className="mt-1 text-[12.5px] text-mute">{photo.date}</p>
         </div>
       )}
     </>
