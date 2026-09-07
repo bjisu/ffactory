@@ -80,21 +80,18 @@ export const privatePhotos: {
     id: 1,
     caption: "DEADLINE 재킷 촬영 비하인드",
     date: "2025.11.02",
-    // 핑크·퍼플 스테이지 조명
     image: "/photos/01.jpg",
   },
   {
     id: 2,
     caption: "안무 연습실, 첫 합",
     date: "2025.11.18",
-    // 어둑한 연습실
     image: "/photos/02.jpg",
   },
   {
     id: 3,
     caption: "뮤직비디오 세트 대기 중",
     date: "2025.12.05",
-    // 무대 커튼 앞에서 대기하는 실루엣
     // 이 파일만 확장자가 .jpeg 입니다
     image: "/photos/03.jpeg",
     // 원본 위쪽이 빈 벽이라 중앙 크롭하면 인물이 아래로 밀려 잘립니다
@@ -104,7 +101,6 @@ export const privatePhotos: {
     id: 4,
     caption: "발매 전날 밤",
     date: "2026.01.14",
-    // 밤 도시 거리
     image: "/photos/04.jpg",
   },
 ];
