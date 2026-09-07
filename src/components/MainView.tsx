@@ -21,7 +21,7 @@ export default function MainView({ ownership }: { ownership: Ownership }) {
       <div className="flex-1 overflow-y-auto px-6 pt-5 pb-10">
         {/* 소유 배지 */}
         <div className="flex items-center justify-between rounded-full border border-white/8 bg-ink-2 py-2.5 pl-4 pr-3.5">
-          <span className="engrave foil text-[15px]">
+          <span className="engrave foil text-[14px]">
             No.{keyring.serialNumber.toLocaleString()}
           </span>
           <span className="text-[12.5px] text-mute">
@@ -51,7 +51,7 @@ export default function MainView({ ownership }: { ownership: Ownership }) {
           <div className="relative flex h-52 items-end p-5">
             <span className="absolute left-1/2 top-1/2 grid h-14 w-14 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-chalk/95 transition group-active:scale-92">
               <svg viewBox="0 0 24 24" className="ml-1 h-5 w-5" aria-hidden>
-                <path d="M7 4.5l12 7.5-12 7.5z" fill="#08080a" />
+                <path d="M7 4.5l12 7.5-12 7.5z" fill="#000000" />
               </svg>
             </span>
             <div>
@@ -142,7 +142,7 @@ export default function MainView({ ownership }: { ownership: Ownership }) {
             <p className="mt-2 text-[19px] font-bold tracking-tight text-chalk">
               {store.label}
             </p>
-            <p className="mt-1 text-[12.5px] text-mute">{store.name}</p>
+            <p className="mt-1 text-[12.5px] text-chalk/65">{store.name}</p>
           </a>
         </section>
       </div>

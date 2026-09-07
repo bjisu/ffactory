@@ -65,12 +65,12 @@ export default function WelcomeMessage({ onDone }: { onDone: () => void }) {
             >
               {playing ? (
                 <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden>
-                  <rect x="6" y="5" width="4" height="14" rx="1" fill="#08080a" />
-                  <rect x="14" y="5" width="4" height="14" rx="1" fill="#08080a" />
+                  <rect x="6" y="5" width="4" height="14" rx="1" fill="#000000" />
+                  <rect x="14" y="5" width="4" height="14" rx="1" fill="#000000" />
                 </svg>
               ) : (
                 <svg viewBox="0 0 24 24" className="ml-0.5 h-4 w-4" aria-hidden>
-                  <path d="M7 4.5l12 7.5-12 7.5z" fill="#08080a" />
+                  <path d="M7 4.5l12 7.5-12 7.5z" fill="#000000" />
                 </svg>
               )}
             </button>

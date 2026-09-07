@@ -59,7 +59,7 @@ function Verified({ onRegister }: { onRegister: () => void }) {
             <svg viewBox="0 0 24 24" fill="none" className="h-3.5 w-3.5">
               <path
                 d="M5 12.5l4.5 4.5L19 7.5"
-                stroke="#08080a"
+                stroke="#000000"
                 strokeWidth="2.6"
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -77,7 +77,7 @@ function Verified({ onRegister }: { onRegister: () => void }) {
           style={{ animationDelay: "0.14s" }}
         >
           <p className="text-[13px] text-mute">이 키링의 고유 번호</p>
-          <p className="engrave foil mt-1 text-[86px] leading-[0.92]">
+          <p className="engrave foil mt-1 text-[72px] leading-[0.92]">
             No.{keyring.serialNumber.toLocaleString()}
           </p>
         </div>

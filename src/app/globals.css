@@ -1,19 +1,18 @@
 @import "tailwindcss";
 
 @theme {
-  --color-ink: #08080a;
-  --color-ink-2: #101014;
-  --color-ink-3: #17171d;
-  --color-rose: #ff3e7f;
-  --color-rose-deep: #7a1236;
+  --color-ink: #000000;
+  --color-ink-2: #0a0a0a;
+  --color-ink-3: #121212;
+  --color-rose: #f7a7bb;
+  --color-rose-deep: #8a4a5a;
   --color-champagne: #e5cfa0;
   --color-chalk: #ededef;
-  --color-mute: #8a8a93;
+  --color-mute: #7a7a80;
 
   --font-sans: "Pretendard Variable", Pretendard, -apple-system,
     BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Malgun Gothic",
     sans-serif;
-  --font-engrave: "Instrument Serif", "Times New Roman", serif;
 }
 
 @font-face {
@@ -27,7 +26,7 @@
 
 html,
 body {
-  background: #050506;
+  background: #000000;
   color: var(--color-chalk);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
@@ -37,22 +36,23 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* 각인 숫자 — 이 페이지에서 세리프는 오직 인증 번호에만 쓰입니다 */
+/* 각인 숫자 — 굵은 산세리프, 자릿수가 바뀌어도 폭이 흔들리지 않도록 tabular */
 .engrave {
-  font-family: var(--font-engrave);
-  font-weight: 400;
-  letter-spacing: -0.02em;
+  font-family: var(--font-sans);
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  font-variant-numeric: tabular-nums;
 }
 
-/* 금박 각인 질감 */
+/* 분홍 메탈 각인 질감 */
 .foil {
   background: linear-gradient(
-    172deg,
-    #f6ecd2 0%,
-    #cbae74 34%,
-    #fbf3de 52%,
-    #b99a5f 72%,
-    #e8d5a9 100%
+    100deg,
+    #ffdde6 0%,
+    #d98da3 34%,
+    #fff1f5 52%,
+    #a8657a 72%,
+    #f7a7bb 100%
   );
   -webkit-background-clip: text;
   background-clip: text;
@@ -116,7 +116,7 @@ body {
 .grain {
   background-image: radial-gradient(
       circle at 22% 28%,
-      rgba(255, 62, 127, 0.28),
+      rgba(247, 167, 187, 0.24),
       transparent 58%
     ),
     radial-gradient(circle at 76% 72%, rgba(229, 207, 160, 0.16), transparent 62%),

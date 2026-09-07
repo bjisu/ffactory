@@ -12,7 +12,7 @@ export default function PhoneFrame({
           bg-ink
           sm:min-h-0 sm:h-[860px] sm:w-[400px] sm:rounded-[44px]
           sm:border sm:border-white/10
-          sm:shadow-[0_50px_120px_-30px_rgba(255,62,127,0.22),0_0_0_11px_#0b0b0e]
+          sm:shadow-[0_50px_120px_-30px_rgba(247,167,187,0.20),0_0_0_11px_#0b0b0e]
         "
       >
         {children}
