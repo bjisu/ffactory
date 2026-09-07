@@ -26,7 +26,8 @@ export default function MainView({ ownership }: { ownership: Ownership }) {
 
   return (
     <>
-      <div className="min-h-0 flex-1 overflow-y-auto px-6 pt-5 pb-10">
+      {/* pb는 하단에 떠 있는 "처음부터 다시 시연" 버튼을 피하기 위한 여백입니다 */}
+      <div className="min-h-0 flex-1 overflow-y-auto px-6 pt-5 pb-20">
         {/* 소유 배지 */}
         <div className="flex items-center justify-between rounded-full border border-white/8 bg-ink-2 py-2.5 pl-4 pr-3.5">
           <span className="engrave foil text-[14px]">
@@ -141,46 +142,29 @@ export default function MainView({ ownership }: { ownership: Ownership }) {
           </div>
         </section>
 
-        {/* 공식 채널 — 아이콘만 가로 한 줄 */}
+        {/* 공식 채널 + 스토어 — 아이콘만 가로 한 줄 */}
         <section className="mt-11 flex items-center justify-center gap-5">
-          {socialLinks.map((s) =>
-            s.url ? (
-              <a
-                key={s.id}
-                href={s.url}
-                target="_blank"
-                rel="noreferrer"
-                aria-label={s.label}
-                className="grid h-13 w-13 place-items-center rounded-full border border-white/14 text-chalk transition active:scale-92"
-              >
-                <SocialIcon id={s.id} />
-              </a>
-            ) : (
-              // 주소가 아직 없는 채널은 눌러도 아무 데도 가지 않도록 링크로 만들지 않습니다
-              <span
-                key={s.id}
-                aria-label={`${s.label} (주소 미설정)`}
-                className="grid h-13 w-13 place-items-center rounded-full border border-white/14 text-chalk/35"
-              >
-                <SocialIcon id={s.id} />
-              </span>
-            )
-          )}
-        </section>
-
-        {/* 공식 스토어 */}
-        <section className="mt-11">
+          {socialLinks.map((s) => (
+            <a
+              key={s.id}
+              href={s.url}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={s.label}
+              className="grid h-13 w-13 place-items-center rounded-full border border-white/14 text-chalk transition active:scale-92"
+            >
+              <SocialIcon id={s.id} />
+            </a>
+          ))}
+          {/* 스토어는 구매 동선이라 분홍 채움으로 구분합니다 */}
           <a
             href={store.url}
             target="_blank"
             rel="noreferrer"
-            className="block rounded-3xl border border-rose/30 bg-rose-deep/22 px-6 py-6 transition active:scale-[0.99]"
+            aria-label={`${store.label} ${store.name}`}
+            className="grid h-13 w-13 place-items-center rounded-full bg-rose text-ink transition active:scale-92"
           >
-            <p className="text-[12px] text-rose">{store.note}</p>
-            <p className="mt-2 text-[19px] font-bold tracking-tight text-chalk">
-              {store.label}
-            </p>
-            <p className="mt-1 text-[12.5px] text-chalk/65">{store.name}</p>
+            <SocialIcon id="store" />
           </a>
         </section>
       </div>
@@ -224,7 +208,7 @@ export default function MainView({ ownership }: { ownership: Ownership }) {
 }
 
 /** 공식 채널 아이콘 — 외부 라이브러리 없이 직접 그립니다 */
-function SocialIcon({ id }: { id: "youtube" | "instagram" | "x" }) {
+function SocialIcon({ id }: { id: "youtube" | "instagram" | "store" }) {
   if (id === "youtube") {
     return (
       <svg viewBox="0 0 24 24" className="h-[19px] w-[19px]" aria-hidden>
@@ -263,11 +247,22 @@ function SocialIcon({ id }: { id: "youtube" | "instagram" | "x" }) {
     );
   }
 
+  // 쇼핑백
   return (
-    <svg viewBox="0 0 24 24" className="h-[17px] w-[17px]" aria-hidden>
+    <svg viewBox="0 0 24 24" className="h-[19px] w-[19px]" aria-hidden>
       <path
-        fill="currentColor"
-        d="M17.5 3h3.1l-6.8 7.8L21.8 21h-6.2l-4.9-6.4L5.1 21H2l7.2-8.3L2.3 3h6.4l4.4 5.8L17.5 3zm-1.1 16.1h1.7L7.7 4.8H5.9l10.5 14.3z"
+        d="M4.6 8.2h14.8l-1.1 11.1a1.7 1.7 0 0 1-1.7 1.5H7.4a1.7 1.7 0 0 1-1.7-1.5L4.6 8.2z"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.9"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M8.9 10.4V7.1a3.1 3.1 0 0 1 6.2 0v3.3"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.9"
+        strokeLinecap="round"
       />
     </svg>
   );

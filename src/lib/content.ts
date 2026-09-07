@@ -39,7 +39,7 @@ export const musicVideo = {
 };
 
 /** 공식 채널. id가 아이콘을 결정하므로 임의로 바꾸지 마세요 */
-export const socialLinks: { id: "youtube" | "instagram" | "x"; label: string; url: string }[] = [
+export const socialLinks: { id: "youtube" | "instagram"; label: string; url: string }[] = [
   {
     id: "youtube",
     label: "YouTube",
@@ -51,19 +51,13 @@ export const socialLinks: { id: "youtube" | "instagram" | "x"; label: string; ur
     // TODO: 제안서 제출 전 공식 계정 URL 최종 확인 후 교체
     url: "https://www.instagram.com/blackpinkofficial/",
   },
-  {
-    id: "x",
-    label: "X",
-    // TODO: 공식 X 계정 주소를 넣으세요. 비어 있으면 눌리지 않는 상태로 표시됩니다
-    url: "",
-  },
 ];
 
 export const store = {
   label: "공식 스토어",
   name: "YG SELECT",
   url: "https://www.ygselect.com",
-  /** 스토어 버튼 하단 보조 문구 */
+  /** 보조 문구. 스토어가 아이콘 버튼으로 바뀌면서 현재 화면에는 표시되지 않습니다 */
   note: "키링 소유자 전용 쿠폰 적용",
 };
 
