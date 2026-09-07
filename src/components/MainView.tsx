@@ -41,30 +41,55 @@ export default function MainView({ ownership }: { ownership: Ownership }) {
           </p>
         </header>
 
-        {/* 뮤직비디오 */}
-        <a
-          href={musicVideo.url}
-          target="_blank"
-          rel="noreferrer"
-          className="grain group mt-8 block overflow-hidden rounded-3xl border border-white/8"
-        >
-          <div className="relative flex h-52 items-end p-5">
-            <span className="absolute left-1/2 top-1/2 grid h-14 w-14 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-chalk/95 transition group-active:scale-92">
-              <svg viewBox="0 0 24 24" className="ml-1 h-5 w-5" aria-hidden>
-                <path d="M7 4.5l12 7.5-12 7.5z" fill="#000000" />
-              </svg>
-            </span>
-            <div>
-              <p className="text-[11.5px] text-chalk/60">{musicVideo.label}</p>
-              <p className="mt-1 text-[21px] font-bold tracking-tight text-chalk">
-                {musicVideo.title}
-              </p>
+        {/* 뮤직비디오 — youtubeId가 있으면 실제 영상, 없으면 샘플 비주얼 */}
+        {musicVideo.youtubeId ? (
+          <div className="mt-8 overflow-hidden rounded-3xl border border-white/8 bg-ink-2">
+            <div className="relative aspect-video">
+              <iframe
+                src={`https://www.youtube.com/embed/${musicVideo.youtubeId}`}
+                title={musicVideo.title}
+                className="absolute inset-0 h-full w-full"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              />
             </div>
-            <span className="absolute right-5 bottom-5 text-[11.5px] tabular-nums text-chalk/60">
-              {musicVideo.runtime}
-            </span>
+            <div className="flex items-end justify-between px-5 py-4">
+              <div>
+                <p className="text-[11.5px] text-chalk/60">{musicVideo.label}</p>
+                <p className="mt-1 text-[21px] font-bold tracking-tight text-chalk">
+                  {musicVideo.title}
+                </p>
+              </div>
+              <span className="text-[11.5px] tabular-nums text-chalk/60">
+                {musicVideo.runtime}
+              </span>
+            </div>
           </div>
-        </a>
+        ) : (
+          <a
+            href={musicVideo.url}
+            target="_blank"
+            rel="noreferrer"
+            className="grain group mt-8 block overflow-hidden rounded-3xl border border-white/8"
+          >
+            <div className="relative flex h-52 items-end p-5">
+              <span className="absolute left-1/2 top-1/2 grid h-14 w-14 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-chalk/95 transition group-active:scale-92">
+                <svg viewBox="0 0 24 24" className="ml-1 h-5 w-5" aria-hidden>
+                  <path d="M7 4.5l12 7.5-12 7.5z" fill="#000000" />
+                </svg>
+              </span>
+              <div>
+                <p className="text-[11.5px] text-chalk/60">{musicVideo.label}</p>
+                <p className="mt-1 text-[21px] font-bold tracking-tight text-chalk">
+                  {musicVideo.title}
+                </p>
+              </div>
+              <span className="absolute right-5 bottom-5 text-[11.5px] tabular-nums text-chalk/60">
+                {musicVideo.runtime}
+              </span>
+            </div>
+          </a>
+        )}
 
         {/* 비공개 포토 */}
         <section className="mt-11">
