@@ -4,9 +4,10 @@
  */
 
 export const artist = {
-  /** 상단 대형 워드마크 (2줄로 쪼개서 표시) */
-  wordmarkTop: "BLACK",
-  wordmarkBottom: "PINK",
+  /** 상단 워드마크 로고. public 기준 경로 */
+  logo: "/photos/logo.svg",
+  /** 발행 정보 등 텍스트로 아티스트명이 필요한 곳에 씁니다 */
+  name: "BLACKPINK",
   nameKo: "블랙핑크",
 };
 
@@ -37,19 +38,24 @@ export const musicVideo = {
   youtubeId: "2GJfWMYCWY0",
 };
 
-export const socialLinks = [
+/** 공식 채널. id가 아이콘을 결정하므로 임의로 바꾸지 마세요 */
+export const socialLinks: { id: "youtube" | "instagram" | "x"; label: string; url: string }[] = [
   {
     id: "youtube",
     label: "YouTube",
-    handle: "@BLACKPINK",
     url: "https://www.youtube.com/@BLACKPINK",
   },
   {
     id: "instagram",
     label: "Instagram",
-    handle: "@blackpinkofficial",
     // TODO: 제안서 제출 전 공식 계정 URL 최종 확인 후 교체
     url: "https://www.instagram.com/blackpinkofficial/",
+  },
+  {
+    id: "x",
+    label: "X",
+    // TODO: 공식 X 계정 주소를 넣으세요. 비어 있으면 눌리지 않는 상태로 표시됩니다
+    url: "",
   },
 ];
 

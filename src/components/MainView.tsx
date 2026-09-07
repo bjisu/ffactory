@@ -39,12 +39,14 @@ export default function MainView({ ownership }: { ownership: Ownership }) {
 
         {/* 워드마크 */}
         <header className="mt-9">
-          <h1 className="text-[46px] font-extrabold leading-[0.86] tracking-[-0.045em] text-chalk">
-            {artist.wordmarkTop}
-            <br />
-            <span className="text-rose">{artist.wordmarkBottom}</span>
-          </h1>
-          <p className="mt-3.5 text-[12.5px] text-mute">
+          {/* 가로 폭만 지정하고 높이는 h-auto로 두어 원본 비율을 유지합니다 */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={artist.logo}
+            alt={artist.name}
+            className="h-auto w-[252px]"
+          />
+          <p className="mt-4 text-[12.5px] text-mute">
             {keyring.productName} · {keyring.edition}
           </p>
         </header>
@@ -102,12 +104,9 @@ export default function MainView({ ownership }: { ownership: Ownership }) {
 
         {/* 비공개 포토 */}
         <section className="mt-11">
-          <div className="flex items-baseline justify-between">
-            <h2 className="text-[17px] font-semibold tracking-tight text-chalk">
-              비공개 포토
-            </h2>
-            <span className="text-[12px] text-rose">키링 소유자만</span>
-          </div>
+          <h2 className="text-[17px] font-semibold tracking-tight text-chalk">
+            비공개 포토
+          </h2>
           <p className="mt-1.5 text-[12.5px] text-mute">
             {formatDate(ownership.registeredAt)}에 열렸습니다
           </p>
@@ -142,27 +141,31 @@ export default function MainView({ ownership }: { ownership: Ownership }) {
           </div>
         </section>
 
-        {/* 공식 SNS */}
-        <section className="mt-11">
-          <h2 className="text-[17px] font-semibold tracking-tight text-chalk">
-            공식 채널
-          </h2>
-          <div className="mt-4 flex flex-col gap-2.5">
-            {socialLinks.map((s) => (
+        {/* 공식 채널 — 아이콘만 가로 한 줄 */}
+        <section className="mt-11 flex items-center justify-center gap-5">
+          {socialLinks.map((s) =>
+            s.url ? (
               <a
                 key={s.id}
                 href={s.url}
                 target="_blank"
                 rel="noreferrer"
-                className="flex items-center justify-between rounded-2xl border border-white/8 bg-ink-2 px-5 py-4 transition active:scale-[0.99]"
+                aria-label={s.label}
+                className="grid h-13 w-13 place-items-center rounded-full border border-white/14 text-chalk transition active:scale-92"
               >
-                <span className="text-[14.5px] font-medium text-chalk">
-                  {s.label}
-                </span>
-                <span className="text-[12.5px] text-mute">{s.handle}</span>
+                <SocialIcon id={s.id} />
               </a>
-            ))}
-          </div>
+            ) : (
+              // 주소가 아직 없는 채널은 눌러도 아무 데도 가지 않도록 링크로 만들지 않습니다
+              <span
+                key={s.id}
+                aria-label={`${s.label} (주소 미설정)`}
+                className="grid h-13 w-13 place-items-center rounded-full border border-white/14 text-chalk/35"
+              >
+                <SocialIcon id={s.id} />
+              </span>
+            )
+          )}
         </section>
 
         {/* 공식 스토어 */}
@@ -217,5 +220,55 @@ export default function MainView({ ownership }: { ownership: Ownership }) {
         </div>
       )}
     </>
+  );
+}
+
+/** 공식 채널 아이콘 — 외부 라이브러리 없이 직접 그립니다 */
+function SocialIcon({ id }: { id: "youtube" | "instagram" | "x" }) {
+  if (id === "youtube") {
+    return (
+      <svg viewBox="0 0 24 24" className="h-[19px] w-[19px]" aria-hidden>
+        <path
+          fill="currentColor"
+          d="M22.6 7.2a2.8 2.8 0 0 0-1.9-2C19 4.7 12 4.7 12 4.7s-7 0-8.7.5a2.8 2.8 0 0 0-1.9 2C1 8.9 1 12 1 12s0 3.1.4 4.8a2.8 2.8 0 0 0 1.9 2c1.7.4 8.7.4 8.7.4s7 0 8.7-.4a2.8 2.8 0 0 0 1.9-2c.4-1.7.4-4.8.4-4.8s0-3.1-.4-4.8z"
+        />
+        <path fill="#000000" d="M9.8 15.3V8.7l5.7 3.3-5.7 3.3z" />
+      </svg>
+    );
+  }
+
+  if (id === "instagram") {
+    return (
+      <svg viewBox="0 0 24 24" className="h-[19px] w-[19px]" aria-hidden>
+        <rect
+          x="3"
+          y="3"
+          width="18"
+          height="18"
+          rx="5.4"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.9"
+        />
+        <circle
+          cx="12"
+          cy="12"
+          r="4.1"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.9"
+        />
+        <circle cx="17.2" cy="6.8" r="1.25" fill="currentColor" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg viewBox="0 0 24 24" className="h-[17px] w-[17px]" aria-hidden>
+      <path
+        fill="currentColor"
+        d="M17.5 3h3.1l-6.8 7.8L21.8 21h-6.2l-4.9-6.4L5.1 21H2l7.2-8.3L2.3 3h6.4l4.4 5.8L17.5 3zm-1.1 16.1h1.7L7.7 4.8H5.9l10.5 14.3z"
+      />
+    </svg>
   );
 }

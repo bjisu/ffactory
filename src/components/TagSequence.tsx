@@ -87,7 +87,7 @@ function Verified({ onRegister }: { onRegister: () => void }) {
           className="rise mt-10 divide-y divide-white/8 border-y border-white/8 text-[13.5px]"
           style={{ animationDelay: "0.26s" }}
         >
-          <Row label="아티스트" value={`${artist.wordmarkTop}${artist.wordmarkBottom}`} />
+          <Row label="아티스트" value={artist.name} />
           <Row label="에디션" value={keyring.edition} />
           <Row
             label="발행 수량"
