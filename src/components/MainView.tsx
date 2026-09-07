@@ -29,11 +29,15 @@ export default function MainView({ ownership }: { ownership: Ownership }) {
       {/* pb는 하단에 떠 있는 "처음부터 다시 시연" 버튼을 피하기 위한 여백입니다 */}
       <div className="min-h-0 flex-1 overflow-y-auto px-6 pt-5 pb-20">
         {/* 소유 배지 */}
-        <div className="flex items-center justify-between rounded-full border border-white/8 bg-ink-2 py-2.5 pl-4 pr-3.5">
-          <span className="engrave foil text-[14px]">
+        {/* 작은 글씨에서는 foil 그라데이션이 오히려 읽기 어려워 단색을 씁니다 */}
+        <div className="flex items-center justify-between rounded-full border border-white/16 bg-ink-3 py-2.5 pl-4 pr-3.5">
+          <span
+            className="engrave text-[15px] text-rose"
+            style={{ fontWeight: 900 }}
+          >
             No.{keyring.serialNumber.toLocaleString()}
           </span>
-          <span className="text-[12.5px] text-mute">
+          <span className="text-[12.5px] font-medium text-chalk/85">
             {days === 0 ? "오늘부터 함께" : `함께한 지 ${days}일`}
           </span>
         </div>

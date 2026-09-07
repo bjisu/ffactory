@@ -44,15 +44,18 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
-/* 분홍 메탈 각인 질감 */
+/* 분홍 메탈 각인 질감. 큰 인증 번호 전용 — 작은 글씨에는 단색을 쓰세요.
+   fit-content가 없으면 그라데이션이 줄 전체 폭에 깔려서
+   글자에는 앞부분만 걸치고 끝 숫자가 어두워집니다. */
 .foil {
-  background: linear-gradient(
+  width: fit-content;
+  background-image: linear-gradient(
     100deg,
-    #ffdde6 0%,
-    #d98da3 34%,
-    #fff1f5 52%,
-    #a8657a 72%,
-    #f7a7bb 100%
+    #ffe3ea 0%,
+    #f0a8bd 32%,
+    #fff5f8 54%,
+    #e79db2 76%,
+    #ffd6e1 100%
   );
   -webkit-background-clip: text;
   background-clip: text;
