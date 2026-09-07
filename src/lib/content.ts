@@ -26,15 +26,15 @@ export const keyring = {
 export const musicVideo = {
   title: "DEADLINE",
   label: "3rd MINI ALBUM",
-  /** 공식 유튜브 채널 (확인됨) */
-  url: "https://www.youtube.com/@BLACKPINK",
+  /** 공식 MV */
+  url: "https://www.youtube.com/watch?v=2GJfWMYCWY0",
   runtime: "3:24",
   /**
    * 유튜브 공식 MV 주소에서 v= 뒤의 값을 넣으세요.
    * 예: https://www.youtube.com/watch?v=AbCdEfGhIjK → "AbCdEfGhIjK"
    * 비워 두면 샘플 비주얼과 재생 버튼이 대신 표시됩니다.
    */
-  youtubeId: "",
+  youtubeId: "2GJfWMYCWY0",
 };
 
 export const socialLinks = [

@@ -44,12 +44,13 @@ export default function MainView({ ownership }: { ownership: Ownership }) {
         {/* 뮤직비디오 — youtubeId가 있으면 실제 영상, 없으면 샘플 비주얼 */}
         {musicVideo.youtubeId ? (
           <div className="mt-8 overflow-hidden rounded-3xl border border-white/8 bg-ink-2">
-            <div className="relative aspect-video">
+            {/* 카드 상단 모서리에 맞춰 iframe을 잘라냅니다 */}
+            <div className="relative aspect-video overflow-hidden rounded-t-3xl">
               <iframe
                 src={`https://www.youtube.com/embed/${musicVideo.youtubeId}`}
                 title={musicVideo.title}
-                className="absolute inset-0 h-full w-full"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                className="absolute inset-0 h-full w-full border-0"
+                allow="accelerometer; clipboard-write; encrypted-media; picture-in-picture"
                 allowFullScreen
               />
             </div>
