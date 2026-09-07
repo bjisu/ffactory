@@ -1,0 +1,140 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #08080a;
+  --color-ink-2: #101014;
+  --color-ink-3: #17171d;
+  --color-rose: #ff3e7f;
+  --color-rose-deep: #7a1236;
+  --color-champagne: #e5cfa0;
+  --color-chalk: #ededef;
+  --color-mute: #8a8a93;
+
+  --font-sans: "Pretendard Variable", Pretendard, -apple-system,
+    BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Malgun Gothic",
+    sans-serif;
+  --font-engrave: "Instrument Serif", "Times New Roman", serif;
+}
+
+@font-face {
+  font-family: "Pretendard Variable";
+  font-weight: 45 920;
+  font-style: normal;
+  font-display: swap;
+  src: url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/woff2/PretendardVariable.woff2")
+    format("woff2-variations");
+}
+
+html,
+body {
+  background: #050506;
+  color: var(--color-chalk);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 각인 숫자 — 이 페이지에서 세리프는 오직 인증 번호에만 쓰입니다 */
+.engrave {
+  font-family: var(--font-engrave);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+/* 금박 각인 질감 */
+.foil {
+  background: linear-gradient(
+    172deg,
+    #f6ecd2 0%,
+    #cbae74 34%,
+    #fbf3de 52%,
+    #b99a5f 72%,
+    #e8d5a9 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* 칩 인식 파형 */
+@keyframes pulse-out {
+  0% {
+    transform: scale(0.35);
+    opacity: 0;
+  }
+  18% {
+    opacity: 0.85;
+  }
+  100% {
+    transform: scale(1.85);
+    opacity: 0;
+  }
+}
+.ring-pulse {
+  animation: pulse-out 2s cubic-bezier(0.2, 0.6, 0.3, 1) infinite;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.rise {
+  animation: rise 0.62s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes sweep {
+  from {
+    transform: translateX(-120%);
+  }
+  to {
+    transform: translateX(220%);
+  }
+}
+.sweep::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    100deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.22) 50%,
+    transparent 80%
+  );
+  animation: sweep 1.5s ease-out 0.35s 1 both;
+}
+
+/* 플레이스홀더 이미지 질감 */
+.grain {
+  background-image: radial-gradient(
+      circle at 22% 28%,
+      rgba(255, 62, 127, 0.28),
+      transparent 58%
+    ),
+    radial-gradient(circle at 76% 72%, rgba(229, 207, 160, 0.16), transparent 62%),
+    linear-gradient(150deg, #16161c, #0b0b0f);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-rose);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
