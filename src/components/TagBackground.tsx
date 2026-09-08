@@ -10,11 +10,11 @@ import { tagBackground } from "@/lib/content";
  */
 
 /**
- * 배경 확대 배율. 원본(750x1333)이 화면을 채우기에 작아서 크게 확대할수록
- * 눈에 띄게 뭉개집니다. 위쪽 빈 벽을 걷어내는 최소한만 확대합니다.
- * 더 키우려면 해상도가 높은 배경 전용 이미지가 필요합니다.
+ * 배경 확대 배율. 현재 배경(bg.jpg, 2100x2800)은 object-cover만으로 화면을
+ * 채우고 인물도 잘리지 않아 확대가 필요 없습니다. 확대하면 좌우가 더 잘려
+ * 바깥쪽 인물이 사라집니다.
  */
-const BG_SCALE = 1.15;
+const BG_SCALE = 1;
 
 export default function TagBackground({
   dim,

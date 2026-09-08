@@ -9,8 +9,9 @@ import { artist, keyring } from "@/lib/content";
 export default function StartScreen({ onStart }: { onStart: () => void }) {
   return (
     <div className="relative flex min-h-0 flex-1 flex-col justify-between px-8 pb-14 pt-14">
-      {/* 상단은 로고가 읽힐 최소한만. 중앙부는 딤 없이 사진 그대로 둡니다 */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-1/4 bg-gradient-to-b from-black/55 to-transparent" />
+      {/* 배경 상단이 흰색이라 로고(분홍)와 에디션 표기가 묻힙니다.
+          그 두 줄이 놓이는 만큼만 덮고 아래로 빠르게 투명해집니다. */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-2/5 bg-gradient-to-b from-black/85 via-black/40 to-transparent" />
       {/* 하단은 버튼과 문구가 확실히 읽히도록 진하게 */}
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black via-black/80 to-transparent" />
 
