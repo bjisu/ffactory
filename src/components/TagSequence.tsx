@@ -28,15 +28,20 @@ export default function TagSequence({ onRegister }: { onRegister: () => void }) 
             aria-hidden
             onError={() => setBgBroken(true)}
             // scale-105는 블러 때문에 가장자리가 비치는 것을 가립니다
-            className="absolute inset-0 h-full w-full scale-105 object-cover blur-[3px]"
+            className="absolute inset-0 h-full w-full scale-105 object-cover transition-[filter] duration-700"
+            style={{ filter: `blur(${phase === "verified" ? 3 : 1.5}px)` }}
           />
-          {/* 기본 딤 — 정보량이 많은 인증 화면에서 더 진하게 */}
+          {/* 기본 딤 — 인식 화면은 사진을 살리고, 정보량이 많은 인증 화면은 진하게 */}
           <div
             className="absolute inset-0 bg-black transition-opacity duration-700"
-            style={{ opacity: phase === "verified" ? 0.84 : 0.72 }}
+            style={{ opacity: phase === "verified" ? 0.84 : 0.45 }}
           />
-          {/* 아래로 갈수록 진해지는 그라데이션 */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/55 to-black/92" />
+          {/* 아래로 갈수록 진해지는 그라데이션. 인식 화면에서는 약하게 걸어
+              사진 중앙부를 살리고 텍스트가 놓이는 아래쪽만 눌러 줍니다 */}
+          <div
+            className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/55 to-black/92 transition-opacity duration-700"
+            style={{ opacity: phase === "verified" ? 1 : 0.45 }}
+          />
         </div>
       )}
 
@@ -49,19 +54,20 @@ export default function TagSequence({ onRegister }: { onRegister: () => void }) 
 
 function Reading() {
   return (
-    <div className="flex flex-1 flex-col items-center justify-center gap-9 px-8">
-      <div className="relative grid h-32 w-32 place-items-center">
+    <div className="flex flex-1 flex-col items-center justify-center gap-7 px-8">
+      {/* 파동은 기존 128px의 60% 크기입니다 */}
+      <div className="relative grid h-[77px] w-[77px] place-items-center">
         {[0, 0.5, 1].map((delay) => (
           <span
             key={delay}
-            className="ring-pulse absolute h-32 w-32 rounded-full border-2 border-rose/85"
+            className="ring-pulse absolute h-[77px] w-[77px] rounded-full border border-rose/85"
             style={{ animationDelay: `${delay}s` }}
           />
         ))}
         <svg
           viewBox="0 0 24 24"
           fill="none"
-          className="h-10 w-10 text-rose"
+          className="h-6 w-6 text-rose"
           aria-hidden
         >
           <path
@@ -72,7 +78,15 @@ function Reading() {
           />
         </svg>
       </div>
-      <p className="text-sm tracking-wide text-chalk/90">칩을 읽고 있습니다</p>
+      {/* 배경이 밝아져도 읽히도록 글자 뒤에 그림자를 깝니다 */}
+      <p
+        className="text-sm tracking-wide text-chalk"
+        style={{
+          textShadow: "0 1px 3px rgba(0,0,0,0.9), 0 2px 14px rgba(0,0,0,0.85)",
+        }}
+      >
+        칩을 읽고 있습니다
+      </p>
     </div>
   );
 }
