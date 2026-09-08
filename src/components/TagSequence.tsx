@@ -2,16 +2,20 @@
 
 import { useEffect, useState } from "react";
 import { artist, keyring } from "@/lib/content";
+import type { NfcStatus } from "@/lib/useNfcScan";
 
 export type TagPhase = "reading" | "verified";
 
 export default function TagSequence({
   onRegister,
   onPhaseChange,
+  nfcStatus = "idle",
 }: {
   onRegister: () => void;
   /** 배경 농도를 page.tsx가 단계에 맞춰 바꿀 수 있도록 알려 줍니다 */
   onPhaseChange?: (phase: TagPhase) => void;
+  /** OS NFC 스캔 상태 — 안내 문구를 바꾸는 데만 씁니다 */
+  nfcStatus?: NfcStatus;
 }) {
   const [phase, setPhase] = useState<TagPhase>("reading");
 
@@ -27,12 +31,28 @@ export default function TagSequence({
   return (
     // 배경이 fixed z-0이므로 내용은 z-10으로 올립니다
     <div className="relative z-10 flex min-h-0 flex-1 flex-col">
-      {phase === "reading" ? <Reading /> : <Verified onRegister={onRegister} />}
+      {phase === "reading" ? (
+        <Reading nfcStatus={nfcStatus} />
+      ) : (
+        <Verified onRegister={onRegister} />
+      )}
     </div>
   );
 }
 
-function Reading() {
+/**
+ * OS 스캔 팝업이 못 뜨는 경우에도 화면은 그대로 두고 문구만 바꿉니다.
+ * 시연은 어느 경우에나 이어집니다.
+ */
+const READING_MESSAGE: Record<NfcStatus, string> = {
+  idle: "NFC 칩을 확인하고 있습니다",
+  scanning: "NFC 칩을 확인하고 있습니다",
+  unsupported: "이 브라우저에서는 NFC를 읽을 수 없습니다",
+  denied: "NFC 권한이 필요합니다",
+  error: "NFC를 시작할 수 없습니다",
+};
+
+function Reading({ nfcStatus }: { nfcStatus: NfcStatus }) {
   return (
     <div className="flex flex-1 flex-col items-center justify-center gap-7 px-8">
       {/* 파동은 기존 128px의 60% 크기입니다 */}
@@ -65,7 +85,7 @@ function Reading() {
           textShadow: "0 1px 3px rgba(0,0,0,0.9), 0 2px 14px rgba(0,0,0,0.85)",
         }}
       >
-        칩을 읽고 있습니다
+        {READING_MESSAGE[nfcStatus]}
       </p>
     </div>
   );
