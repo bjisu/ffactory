@@ -34,10 +34,11 @@ export default function Page() {
   // TagSequence의 의존성 배열에 들어가므로 매 렌더마다 새로 만들지 않습니다
   const handlePhaseChange = useCallback((p: TagPhase) => setTagPhase(p), []);
 
-  // 시작 화면은 사진을 가장 살리고, 정보량이 많은 인증 화면에서 가장 어둡습니다
+  // 시작 화면은 전체 딤과 상단 스크림을 걷고(StartScreen이 로고 뒤와 하단만
+  // 눌러 줍니다) 사진을 가장 살립니다. 인증 화면이 가장 어둡습니다.
   const bg =
     stage === "start"
-      ? { dim: 0.35, blur: 1.5, gradient: 0.35 }
+      ? { dim: 0.18, blur: 1.5, gradient: 0 }
       : tagPhase === "reading"
         ? { dim: 0.45, blur: 1.5, gradient: 0.45 }
         : { dim: 0.84, blur: 3, gradient: 1 };
@@ -49,7 +50,12 @@ export default function Page() {
       ) : !ownership ? (
         <>
           {/* 배경을 두 화면 바깥에 두어 시작 → 인식으로 넘어가도 이어집니다 */}
-          <TagBackground dim={bg.dim} blur={bg.blur} gradient={bg.gradient} />
+          <TagBackground
+            dim={bg.dim}
+            blur={bg.blur}
+            gradient={bg.gradient}
+            intro={stage === "start"}
+          />
           {stage === "start" ? (
             <StartScreen onStart={() => setStage("tag")} />
           ) : (

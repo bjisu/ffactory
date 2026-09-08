@@ -89,6 +89,34 @@ body {
   animation: pulse-out 2s cubic-bezier(0.2, 0.6, 0.3, 1) infinite;
 }
 
+/* 첫 화면 등장 연출 — 배경이 살짝 확대된 상태에서 제자리로 가라앉습니다.
+   끝 값이 배경의 평소 transform과 같아야 애니메이션이 끝난 뒤 튀지 않습니다. */
+@keyframes bg-settle {
+  from {
+    transform: scale(1.46);
+  }
+  to {
+    transform: scale(1.35);
+  }
+}
+.bg-settle {
+  animation: bg-settle 3s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* 등록하기 버튼 주변에 도는 은은한 분홍 빛 */
+@keyframes glow-pulse {
+  0%,
+  100% {
+    box-shadow: 0 6px 26px -8px rgba(247, 167, 187, 0.35);
+  }
+  50% {
+    box-shadow: 0 10px 42px -6px rgba(247, 167, 187, 0.7);
+  }
+}
+.glow {
+  animation: glow-pulse 3.2s ease-in-out infinite;
+}
+
 @keyframes rise {
   from {
     opacity: 0;
