@@ -1,9 +1,24 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { keyring } from "@/lib/content";
 
 /** 태그별로 토큰과 등록일을 따로 보관합니다 */
 const STORAGE_PREFIX = "nfc-tag:";
+
+/**
+ * 제안용 데모 모드.
+ *
+ * 켜면 태그 식별자 검증을 우회합니다. 주소를 직접 입력하거나 링크를 복사해
+ * 열어도 등록 화면으로 들어가고, 등록 버튼은 서버를 거치지 않습니다.
+ *
+ * 아래 검증 로직과 InvalidTagScreen은 그대로 살아 있습니다. 이 플래그만
+ * "false"로 바꾸면 정식 플로우로 즉시 돌아갑니다.
+ */
+const DEMO_MODE = process.env.NEXT_PUBLIC_DEMO_MODE === "true";
+
+/** 데모 모드에서 식별자 없이 들어왔을 때 쓰는 저장 키 */
+const DEMO_KEY = "__demo__";
 
 export type Ownership = {
   registeredAt: string; // ISO 8601
@@ -101,6 +116,38 @@ export function useTagSession(): TagSession {
     const id = new URLSearchParams(window.location.search).get("tag");
     setTagId(id);
 
+    // 데모 모드: 검증 결과와 무관하게 등록 화면으로 들여보냅니다.
+    // 실제 발행 태그로 들어온 경우에만 서버에서 일련번호를 받아 표시합니다.
+    if (DEMO_MODE) {
+      const stored = read(id ?? DEMO_KEY);
+      setSerialNumber(keyring.serialNumber);
+
+      if (stored) {
+        setOwnership({ registeredAt: stored.registeredAt });
+        replaceHistory();
+        setStage("main");
+      } else {
+        setStage("register");
+      }
+
+      if (!id) return;
+
+      let cancelled = false;
+      fetch(`/api/tags/verify?tag=${encodeURIComponent(id)}`)
+        .then((res) => res.json())
+        .then((data: { valid?: boolean; serialNumber?: number }) => {
+          if (!cancelled && data.valid && typeof data.serialNumber === "number") {
+            setSerialNumber(data.serialNumber);
+          }
+        })
+        .catch(() => {
+          // 데모 모드에서는 검증 실패를 무시합니다
+        });
+      return () => {
+        cancelled = true;
+      };
+    }
+
     if (!id) {
       setStage("invalid");
       return;
@@ -143,7 +190,19 @@ export function useTagSession(): TagSession {
   }, []);
 
   const register = useCallback(() => {
-    if (!tagId || submitting) return;
+    if (submitting) return;
+
+    // 데모 모드: 서버를 거치지 않고 바로 등록 완료로 넘어갑니다
+    if (DEMO_MODE) {
+      const registeredAt = new Date().toISOString();
+      write(tagId ?? DEMO_KEY, { token: "demo", registeredAt });
+      setOwnership({ registeredAt });
+      setError(null);
+      setStage("registered");
+      return;
+    }
+
+    if (!tagId) return;
     setSubmitting(true);
     setError(null);
 
@@ -188,16 +247,17 @@ export function useTagSession(): TagSession {
 
   /** 시연용 — 저장된 토큰을 지우고 처음 상태로 되돌립니다 */
   const reset = useCallback(() => {
-    if (tagId) {
+    const key = tagId ?? (DEMO_MODE ? DEMO_KEY : null);
+    if (key) {
       try {
-        window.localStorage.removeItem(STORAGE_PREFIX + tagId);
+        window.localStorage.removeItem(STORAGE_PREFIX + key);
       } catch {
         // 무시
       }
     }
     setOwnership(null);
     setError(null);
-    setStage(tagId ? "register" : "invalid");
+    setStage(DEMO_MODE || tagId ? "register" : "invalid");
   }, [tagId]);
 
   return {
