@@ -1,20 +1,50 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { artist, keyring } from "@/lib/content";
+import { artist, keyring, tagBackground } from "@/lib/content";
 
 type Phase = "reading" | "verified";
 
 export default function TagSequence({ onRegister }: { onRegister: () => void }) {
   const [phase, setPhase] = useState<Phase>("reading");
+  /** 파일이 없거나 경로가 틀리면 배경 없이 검정으로 돌아갑니다 */
+  const [bgBroken, setBgBroken] = useState(false);
 
   useEffect(() => {
     const t = setTimeout(() => setPhase("verified"), 1900);
     return () => clearTimeout(t);
   }, []);
 
-  if (phase === "reading") return <Reading />;
-  return <Verified onRegister={onRegister} />;
+  return (
+    // 배경은 두 화면 바깥에 한 번만 두어, 단계가 바뀌어도 이미지가
+    // 다시 마운트되지 않고 그대로 이어집니다
+    <div className="relative flex min-h-0 flex-1 flex-col">
+      {tagBackground && !bgBroken && (
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={tagBackground}
+            alt=""
+            aria-hidden
+            onError={() => setBgBroken(true)}
+            // scale-105는 블러 때문에 가장자리가 비치는 것을 가립니다
+            className="absolute inset-0 h-full w-full scale-105 object-cover blur-[3px]"
+          />
+          {/* 기본 딤 — 정보량이 많은 인증 화면에서 더 진하게 */}
+          <div
+            className="absolute inset-0 bg-black transition-opacity duration-700"
+            style={{ opacity: phase === "verified" ? 0.9 : 0.72 }}
+          />
+          {/* 아래로 갈수록 진해지는 그라데이션 */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/55 to-black/92" />
+        </div>
+      )}
+
+      <div className="relative flex min-h-0 flex-1 flex-col">
+        {phase === "reading" ? <Reading /> : <Verified onRegister={onRegister} />}
+      </div>
+    </div>
+  );
 }
 
 function Reading() {
@@ -24,7 +54,7 @@ function Reading() {
         {[0, 0.5, 1].map((delay) => (
           <span
             key={delay}
-            className="ring-pulse absolute h-32 w-32 rounded-full border border-rose/45"
+            className="ring-pulse absolute h-32 w-32 rounded-full border-2 border-rose/85"
             style={{ animationDelay: `${delay}s` }}
           />
         ))}
@@ -37,12 +67,12 @@ function Reading() {
           <path
             d="M4 8.5C6.2 10 6.2 14 4 15.5M8.5 6C12 8.5 12 15.5 8.5 18M13 3.5C18 7 18 17 13 20.5"
             stroke="currentColor"
-            strokeWidth="1.6"
+            strokeWidth="2.1"
             strokeLinecap="round"
           />
         </svg>
       </div>
-      <p className="text-sm tracking-wide text-mute">칩을 읽고 있습니다</p>
+      <p className="text-sm tracking-wide text-chalk/90">칩을 읽고 있습니다</p>
     </div>
   );
 }

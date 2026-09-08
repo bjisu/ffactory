@@ -105,6 +105,13 @@ export const privatePhotos: {
   },
 ];
 
+/**
+ * 태그 인식·정품 인증 화면의 배경 이미지.
+ * 지금은 비공개 포토 중 한 장을 빌려 쓰고 있습니다. 전용 이미지가 생기면
+ * public에 넣고 이 경로만 바꾸세요. null이면 검정 배경으로 표시됩니다.
+ */
+export const tagBackground: string | null = "/photos/04.jpg";
+
 /** 첫 태그 시 재생되는 인사 메시지 (실제 음성 파일로 교체) */
 export const welcomeMessage = {
   duration: "0:07",
