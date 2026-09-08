@@ -57,8 +57,6 @@ export const store = {
   label: "공식 스토어",
   name: "YG SELECT",
   url: "https://www.ygselect.com",
-  /** 보조 문구. 스토어가 아이콘 버튼으로 바뀌면서 현재 화면에는 표시되지 않습니다 */
-  note: "키링 소유자 전용 쿠폰 적용",
 };
 
 /**
@@ -106,9 +104,8 @@ export const privatePhotos: {
 ];
 
 /**
- * 태그 인식·정품 인증 화면의 배경 이미지.
- * 지금은 비공개 포토 중 한 장을 빌려 쓰고 있습니다. 전용 이미지가 생기면
- * public에 넣고 이 경로만 바꾸세요. null이면 검정 배경으로 표시됩니다.
+ * 시작·태그 인식·정품 인증 화면의 배경 이미지 (가로가 넓은 화면용).
+ * null이면 배경 없이 검정으로 표시됩니다.
  */
 export const tagBackground: string | null = "/photos/bg.jpg";
 
