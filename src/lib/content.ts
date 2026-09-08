@@ -112,6 +112,15 @@ export const privatePhotos: {
  */
 export const tagBackground: string | null = "/photos/bg.jpg";
 
+/**
+ * 세로가 긴 화면(휴대폰·태블릿)용 배경.
+ * 원본은 거의 정사각(2100x2232)이라 세로 화면을 cover로 덮으면 좌우가 크게
+ * 잘립니다. 이 파일은 원본을 아래에 두고 위쪽을 원본 상단 색으로 이어지게
+ * 늘린 2100x4400 버전이라 인물이 잘리지 않습니다.
+ * null이면 가로·세로 모두 원본을 씁니다.
+ */
+export const tagBackgroundPortrait: string | null = "/photos/bg-portrait.jpg";
+
 /** 첫 태그 시 재생되는 인사 메시지 (실제 음성 파일로 교체) */
 export const welcomeMessage = {
   duration: "0:07",

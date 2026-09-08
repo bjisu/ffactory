@@ -25,7 +25,8 @@ export default function TagSequence({
   }, [phase, onPhaseChange]);
 
   return (
-    <div className="relative flex min-h-0 flex-1 flex-col">
+    // 배경이 fixed z-0이므로 내용은 z-10으로 올립니다
+    <div className="relative z-10 flex min-h-0 flex-1 flex-col">
       {phase === "reading" ? <Reading /> : <Verified onRegister={onRegister} />}
     </div>
   );
