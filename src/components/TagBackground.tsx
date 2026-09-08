@@ -35,15 +35,37 @@ export default function TagBackground({
 
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={tagBackground}
-        alt=""
-        aria-hidden
-        onError={() => setBroken(true)}
-        className="absolute inset-0 h-full w-full origin-bottom object-cover transition-[filter] duration-700"
-        style={{ filter: `blur(${blur}px)`, transform: `scale(${BG_SCALE})` }}
-      />
+      {/* 이미지를 하단에 붙이고 가로 전체를 보여 줍니다. 위에 남는 공간은
+          flex-1 채움이 정확히 메우므로 이음매 위치가 화면 높이와 무관하게
+          항상 맞습니다. 채움의 끝 색은 이미지 상단 색(#fff)과 같습니다. */}
+      {/* 블러는 채움과 이미지를 함께 감싼 이 층에 겁니다. 이미지에만 걸면
+          이미지 위쪽 가장자리가 투명하게 번져 이음매에 선이 생깁니다.
+          블러가 걸릴 때만 살짝 확대해 번진 바깥 테두리를 화면 밖으로 밀어냅니다.
+          블러가 0인 시작 화면은 확대도 하지 않으므로, StartScreen이 같은
+          비율로 계산한 이미지 영역과 이음매 위치가 정확히 일치합니다. */}
+      <div
+        className="absolute inset-0 flex flex-col justify-end transition-[filter] duration-700"
+        style={{
+          filter: `blur(${blur}px)`,
+          transform: `scale(${blur > 0 ? BG_SCALE * 1.05 : BG_SCALE})`,
+        }}
+      >
+        <div
+          className="min-h-0 flex-1"
+          style={{
+            backgroundImage:
+              "linear-gradient(to bottom, #000000 0%, #000000 55%, #ffffff 100%)",
+          }}
+        />
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={tagBackground}
+          alt=""
+          aria-hidden
+          onError={() => setBroken(true)}
+          className="w-full shrink-0 object-contain object-bottom"
+        />
+      </div>
       <div
         className="absolute inset-0 bg-black transition-opacity duration-700"
         style={{ opacity: dim }}
