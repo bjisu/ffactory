@@ -1,14 +1,21 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import PhoneFrame from "@/components/PhoneFrame";
-import TagSequence from "@/components/TagSequence";
+import StartScreen from "@/components/StartScreen";
+import TagBackground from "@/components/TagBackground";
+import TagSequence, { type TagPhase } from "@/components/TagSequence";
 import WelcomeMessage from "@/components/WelcomeMessage";
 import MainView from "@/components/MainView";
 import { useOwnership } from "@/lib/useOwnership";
 
+/** 미등록 상태에서 거치는 단계 */
+type Stage = "start" | "tag";
+
 export default function Page() {
   const { ownership, loading, register, reset } = useOwnership();
+  const [stage, setStage] = useState<Stage>("start");
+  const [tagPhase, setTagPhase] = useState<TagPhase>("reading");
   /** 등록 직후 한 번만 보여주는 인사 메시지 화면 */
   const [showWelcome, setShowWelcome] = useState(false);
 
@@ -20,14 +27,38 @@ export default function Page() {
   const handleReset = () => {
     reset();
     setShowWelcome(false);
+    setStage("start");
+    setTagPhase("reading");
   };
+
+  // TagSequence의 의존성 배열에 들어가므로 매 렌더마다 새로 만들지 않습니다
+  const handlePhaseChange = useCallback((p: TagPhase) => setTagPhase(p), []);
+
+  // 시작 화면은 사진을 가장 살리고, 정보량이 많은 인증 화면에서 가장 어둡습니다
+  const bg =
+    stage === "start"
+      ? { dim: 0.35, blur: 1.5, gradient: 0.35 }
+      : tagPhase === "reading"
+        ? { dim: 0.45, blur: 1.5, gradient: 0.45 }
+        : { dim: 0.84, blur: 3, gradient: 1 };
 
   return (
     <PhoneFrame>
       {loading ? (
         <div className="flex-1" />
       ) : !ownership ? (
-        <TagSequence onRegister={handleRegister} />
+        <>
+          {/* 배경을 두 화면 바깥에 두어 시작 → 인식으로 넘어가도 이어집니다 */}
+          <TagBackground dim={bg.dim} blur={bg.blur} gradient={bg.gradient} />
+          {stage === "start" ? (
+            <StartScreen onStart={() => setStage("tag")} />
+          ) : (
+            <TagSequence
+              onRegister={handleRegister}
+              onPhaseChange={handlePhaseChange}
+            />
+          )}
+        </>
       ) : showWelcome ? (
         <WelcomeMessage onDone={() => setShowWelcome(false)} />
       ) : (

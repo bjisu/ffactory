@@ -116,31 +116,25 @@ export default function MainView({ ownership }: { ownership: Ownership }) {
             {formatDate(ownership.registeredAt)}에 열렸습니다
           </p>
 
-          <div className="mt-4 grid grid-cols-2 gap-2.5">
+          <div className="mt-4 grid grid-cols-2 gap-3">
             {privatePhotos.map((p) => (
               <button
                 key={p.id}
                 onClick={() => setOpenPhoto(p.id)}
-                // flex-col이 없으면 브라우저가 버튼 내용을 세로 중앙에 두어
-                // 캡션 줄 수가 다른 카드끼리 사진 높이가 어긋납니다
-                className="group flex flex-col overflow-hidden rounded-2xl border border-white/8 text-left"
+                aria-label={p.caption}
+                className="group grain relative aspect-square overflow-hidden rounded-2xl border border-white/8"
               >
                 {/* 사진이 없으면 grain 비주얼만 남습니다 */}
-                <div className="grain relative aspect-square">
-                  {srcOf(p) && (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={srcOf(p)!}
-                      alt={p.caption}
-                      onError={() => markBroken(p.id)}
-                      style={{ objectPosition: p.objectPosition ?? "center" }}
-                      className="absolute inset-0 h-full w-full object-cover"
-                    />
-                  )}
-                </div>
-                <p className="px-3 pb-3 pt-2.5 text-[12.5px] leading-snug text-chalk/85">
-                  {p.caption}
-                </p>
+                {srcOf(p) && (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={srcOf(p)!}
+                    alt={p.caption}
+                    onError={() => markBroken(p.id)}
+                    style={{ objectPosition: p.objectPosition ?? "center" }}
+                    className="absolute inset-0 h-full w-full object-cover"
+                  />
+                )}
               </button>
             ))}
           </div>

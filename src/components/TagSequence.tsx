@@ -1,53 +1,32 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { artist, keyring, tagBackground } from "@/lib/content";
+import { artist, keyring } from "@/lib/content";
 
-type Phase = "reading" | "verified";
+export type TagPhase = "reading" | "verified";
 
-export default function TagSequence({ onRegister }: { onRegister: () => void }) {
-  const [phase, setPhase] = useState<Phase>("reading");
-  /** 파일이 없거나 경로가 틀리면 배경 없이 검정으로 돌아갑니다 */
-  const [bgBroken, setBgBroken] = useState(false);
+export default function TagSequence({
+  onRegister,
+  onPhaseChange,
+}: {
+  onRegister: () => void;
+  /** 배경 농도를 page.tsx가 단계에 맞춰 바꿀 수 있도록 알려 줍니다 */
+  onPhaseChange?: (phase: TagPhase) => void;
+}) {
+  const [phase, setPhase] = useState<TagPhase>("reading");
 
   useEffect(() => {
     const t = setTimeout(() => setPhase("verified"), 1900);
     return () => clearTimeout(t);
   }, []);
 
-  return (
-    // 배경은 두 화면 바깥에 한 번만 두어, 단계가 바뀌어도 이미지가
-    // 다시 마운트되지 않고 그대로 이어집니다
-    <div className="relative flex min-h-0 flex-1 flex-col">
-      {tagBackground && !bgBroken && (
-        <div className="pointer-events-none absolute inset-0 overflow-hidden">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={tagBackground}
-            alt=""
-            aria-hidden
-            onError={() => setBgBroken(true)}
-            // scale-105는 블러 때문에 가장자리가 비치는 것을 가립니다
-            className="absolute inset-0 h-full w-full scale-105 object-cover transition-[filter] duration-700"
-            style={{ filter: `blur(${phase === "verified" ? 3 : 1.5}px)` }}
-          />
-          {/* 기본 딤 — 인식 화면은 사진을 살리고, 정보량이 많은 인증 화면은 진하게 */}
-          <div
-            className="absolute inset-0 bg-black transition-opacity duration-700"
-            style={{ opacity: phase === "verified" ? 0.84 : 0.45 }}
-          />
-          {/* 아래로 갈수록 진해지는 그라데이션. 인식 화면에서는 약하게 걸어
-              사진 중앙부를 살리고 텍스트가 놓이는 아래쪽만 눌러 줍니다 */}
-          <div
-            className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/55 to-black/92 transition-opacity duration-700"
-            style={{ opacity: phase === "verified" ? 1 : 0.45 }}
-          />
-        </div>
-      )}
+  useEffect(() => {
+    onPhaseChange?.(phase);
+  }, [phase, onPhaseChange]);
 
-      <div className="relative flex min-h-0 flex-1 flex-col">
-        {phase === "reading" ? <Reading /> : <Verified onRegister={onRegister} />}
-      </div>
+  return (
+    <div className="relative flex min-h-0 flex-1 flex-col">
+      {phase === "reading" ? <Reading /> : <Verified onRegister={onRegister} />}
     </div>
   );
 }
