@@ -9,9 +9,9 @@ import { artist, keyring } from "@/lib/content";
 export default function StartScreen({ onStart }: { onStart: () => void }) {
   return (
     <div className="relative flex min-h-0 flex-1 flex-col justify-between px-8 pb-14 pt-14">
-      {/* 상단은 전체 딤 대신 로고 뒤쪽만 눌러 사진을 살립니다 */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-1/3 bg-gradient-to-b from-black/80 via-black/35 to-transparent" />
-      {/* 하단은 버튼과 문구가 확실히 읽히도록 더 진하게 */}
+      {/* 상단은 로고가 읽힐 최소한만. 중앙부는 딤 없이 사진 그대로 둡니다 */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-1/4 bg-gradient-to-b from-black/55 to-transparent" />
+      {/* 하단은 버튼과 문구가 확실히 읽히도록 진하게 */}
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black via-black/80 to-transparent" />
 
       <header className="rise relative text-center">
@@ -19,9 +19,9 @@ export default function StartScreen({ onStart }: { onStart: () => void }) {
         <img
           src={artist.logo}
           alt={artist.name}
-          className="mx-auto h-auto w-[168px]"
+          className="mx-auto h-auto w-[252px]"
         />
-        <p className="mt-3 text-[11px] tracking-[0.16em] text-chalk/70">
+        <p className="mt-4 text-[12.5px] tracking-[0.18em] text-chalk/75">
           {keyring.edition}
         </p>
       </header>
