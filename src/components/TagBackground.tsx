@@ -63,14 +63,14 @@ export default function TagBackground({
             onError={() => setBroken(true)}
             className="w-full object-contain object-bottom"
           />
-          {/* 이미지 자체의 흰 배경(위쪽 절반)을 덮는 층입니다. 위 빈 공간과
-              같은 순수 검정에서 시작해 인물이 있는 아래쪽에서 투명해지므로
-              경계가 생기지 않습니다. 원본에서 인물은 46.9% 지점부터입니다. */}
+          {/* 이미지 위쪽 가장자리를 위 빈 공간의 검정에 녹이는 층입니다.
+              현재 배경은 상단이 이미 어두워(rgb 5,13,29) 짧게만 걸면 됩니다.
+              밝은 사진으로 교체하면 이 구간을 더 길게 잡아야 합니다. */}
           <div
             className="absolute inset-0"
             style={{
               backgroundImage:
-                "linear-gradient(to bottom, #000000 0%, #000000 44%, rgba(0,0,0,0.45) 62%, rgba(0,0,0,0) 80%)",
+                "linear-gradient(to bottom, #000000 0%, rgba(0,0,0,0.55) 12%, rgba(0,0,0,0) 32%)",
             }}
           />
         </div>

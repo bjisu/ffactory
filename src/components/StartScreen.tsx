@@ -27,9 +27,11 @@ export default function StartScreen({ onStart }: { onStart: () => void }) {
         </header>
       </div>
 
-      {/* 배경 이미지가 차지하는 영역 (2100x2800). 사진이 밝아 흰 글자가
-          묻히므로 이 안 하단에 검정 그라데이션을 깔고 문구와 버튼을 얹습니다 */}
-      <div className="relative w-full shrink-0 aspect-[2100/2800]">
+      {/* 배경 이미지가 차지하는 영역. 비율은 bg.jpg(2100x2232)와 같아야
+          로고가 놓이는 위쪽 빈 공간의 높이가 배경과 정확히 맞습니다.
+          이미지를 교체하면 이 비율도 함께 바꿔야 합니다.
+          이 안 하단에 검정 그라데이션을 깔고 문구와 버튼을 얹습니다 */}
+      <div className="relative w-full shrink-0 aspect-[2100/2232]">
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black via-black/85 to-transparent" />
 
         <div className="absolute inset-x-0 bottom-0 px-8 pb-14">
