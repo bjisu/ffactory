@@ -50,21 +50,30 @@ export default function TagBackground({
           transform: `scale(${blur > 0 ? BG_SCALE * 1.05 : BG_SCALE})`,
         }}
       >
-        <div
-          className="min-h-0 flex-1"
-          style={{
-            backgroundImage:
-              "linear-gradient(to bottom, #000000 0%, #000000 55%, #ffffff 100%)",
-          }}
-        />
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={tagBackground}
-          alt=""
-          aria-hidden
-          onError={() => setBroken(true)}
-          className="w-full shrink-0 object-contain object-bottom"
-        />
+        {/* 이미지 위 빈 공간은 PhoneFrame의 검정 배경이 그대로 보입니다.
+            따로 채우지 않으므로 색이 어긋날 일이 없습니다. */}
+        <div className="min-h-0 flex-1" />
+
+        <div className="relative w-full shrink-0">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={tagBackground}
+            alt=""
+            aria-hidden
+            onError={() => setBroken(true)}
+            className="w-full object-contain object-bottom"
+          />
+          {/* 이미지 자체의 흰 배경(위쪽 절반)을 덮는 층입니다. 위 빈 공간과
+              같은 순수 검정에서 시작해 인물이 있는 아래쪽에서 투명해지므로
+              경계가 생기지 않습니다. 원본에서 인물은 46.9% 지점부터입니다. */}
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage:
+                "linear-gradient(to bottom, #000000 0%, #000000 44%, rgba(0,0,0,0.45) 62%, rgba(0,0,0,0) 80%)",
+            }}
+          />
+        </div>
       </div>
       <div
         className="absolute inset-0 bg-black transition-opacity duration-700"

@@ -36,13 +36,13 @@ export default function Page() {
 
   // 시작 화면은 사진이 주인공이라 전체 딤과 블러를 아예 걷습니다.
   // 로고 뒤와 버튼 영역만 StartScreen이 스크림으로 눌러 줍니다.
-  // 배경 사진이 밝아(상단이 흰색) 어두운 사진 기준의 딤으로는 분홍 파형과
-  // 흰 글씨가 묻힙니다. 인식·인증 화면의 딤을 그에 맞춰 올렸습니다.
+  // 배경 위에 덮은 그라데이션이 이미 상단을 검정으로 만들므로, 인식 화면은
+  // 딤을 낮춰도 파형과 글씨가 읽힙니다. 인증 화면은 정보량이 많아 진하게 둡니다.
   const bg =
     stage === "start"
       ? { dim: 0, blur: 0, gradient: 0 }
       : tagPhase === "reading"
-        ? { dim: 0.68, blur: 1.5, gradient: 0.45 }
+        ? { dim: 0.4, blur: 1.5, gradient: 0.45 }
         : { dim: 0.87, blur: 3, gradient: 1 };
 
   return (
