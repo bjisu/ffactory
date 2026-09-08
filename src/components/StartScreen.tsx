@@ -40,9 +40,9 @@ export default function StartScreen({ onStart }: { onStart: () => void }) {
                 "0 1px 3px rgba(0,0,0,0.9), 0 2px 14px rgba(0,0,0,0.85)",
             }}
           >
-            키링을 휴대폰 뒷면에 대면
+            NFC 굿즈를 등록하면 정품 확인과 함께
             <br />
-            정품 확인과 함께 비공개 콘텐츠가 열립니다
+            블랙핑크의 콘텐츠를 즐길 수 있습니다.
           </p>
           {/* rise와 glow는 둘 다 animation 속성을 쓰므로 한 요소에 겹칠 수 없습니다.
               바깥에서 떠오르게 하고, 버튼에는 빛만 겁니다. */}
