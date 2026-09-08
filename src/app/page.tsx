@@ -37,7 +37,8 @@ export default function Page() {
       {/* 시연용 컨트롤 — 실제 서비스에는 들어가지 않습니다 */}
       <button
         onClick={handleReset}
-        className="absolute bottom-3 left-1/2 z-30 -translate-x-1/2 rounded-full border border-white/10 bg-black/55 px-3.5 py-1.5 text-[11px] text-mute backdrop-blur"
+        // fixed라 콘텐츠 열이 아니라 화면 오른쪽 아래 구석에 붙습니다
+        className="fixed bottom-3 right-3 z-30 rounded-full border border-white/10 bg-black/55 px-3.5 py-1.5 text-[11px] text-mute backdrop-blur"
       >
         처음부터 다시 시연
       </button>

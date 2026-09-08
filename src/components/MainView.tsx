@@ -27,7 +27,7 @@ export default function MainView({ ownership }: { ownership: Ownership }) {
   return (
     <>
       {/* pb는 하단에 떠 있는 "처음부터 다시 시연" 버튼을 피하기 위한 여백입니다 */}
-      <div className="min-h-0 flex-1 overflow-y-auto px-6 pt-5 pb-20">
+      <div className="no-scrollbar min-h-0 flex-1 overflow-y-auto px-6 pt-5 pb-24">
         {/* 소유 배지 */}
         {/* 작은 글씨에서는 foil 그라데이션이 오히려 읽기 어려워 단색을 씁니다 */}
         <div className="flex items-center justify-between rounded-full border border-white/16 bg-ink-3 py-2.5 pl-4 pr-3.5">

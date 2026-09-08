@@ -36,6 +36,15 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
+/* 스크롤은 되지만 막대는 감춥니다 — 모바일 오버레이 스크롤바와 같은 느낌 */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 /* 각인 숫자 — 굵은 산세리프, 자릿수가 바뀌어도 폭이 흔들리지 않도록 tabular */
 .engrave {
   font-family: var(--font-sans);
