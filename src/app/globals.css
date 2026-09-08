@@ -51,42 +51,6 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
-/* 분홍 메탈 각인 질감. 큰 인증 번호 전용 — 작은 글씨에는 단색을 쓰세요.
-   fit-content가 없으면 그라데이션이 줄 전체 폭에 깔려서
-   글자에는 앞부분만 걸치고 끝 숫자가 어두워집니다. */
-.foil {
-  width: fit-content;
-  background-image: linear-gradient(
-    100deg,
-    #ffe3ea 0%,
-    #f0a8bd 32%,
-    #fff5f8 54%,
-    #e79db2 76%,
-    #ffd6e1 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-/* 칩 인식 파형 */
-@keyframes pulse-out {
-  0% {
-    transform: scale(0.35);
-    opacity: 0;
-  }
-  18% {
-    opacity: 0.85;
-  }
-  100% {
-    transform: scale(1.85);
-    opacity: 0;
-  }
-}
-.ring-pulse {
-  animation: pulse-out 2s cubic-bezier(0.2, 0.6, 0.3, 1) infinite;
-}
-
 /* 등록하기 버튼 주변에 도는 은은한 분홍 빛 */
 @keyframes glow-pulse {
   0%,
@@ -113,27 +77,6 @@ body {
 }
 .rise {
   animation: rise 0.62s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-@keyframes sweep {
-  from {
-    transform: translateX(-120%);
-  }
-  to {
-    transform: translateX(220%);
-  }
-}
-.sweep::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    100deg,
-    transparent 20%,
-    rgba(255, 255, 255, 0.22) 50%,
-    transparent 80%
-  );
-  animation: sweep 1.5s ease-out 0.35s 1 both;
 }
 
 /* 플레이스홀더 이미지 질감 */

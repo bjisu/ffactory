@@ -8,7 +8,6 @@ export const artist = {
   logo: "/photos/logo.svg",
   /** 발행 정보 등 텍스트로 아티스트명이 필요한 곳에 씁니다 */
   name: "BLACKPINK",
-  nameKo: "블랙핑크",
 };
 
 export const keyring = {
@@ -16,12 +15,8 @@ export const keyring = {
   productName: "OFFICIAL NFC KEYRING",
   /** 에디션 표기 */
   edition: "DEADLINE EDITION",
-  /** 총 발행 수량 */
-  totalIssued: 5000,
   /** 이 태그의 고유 번호 — 실제로는 칩마다 다른 값이 서버에서 내려옵니다 */
   serialNumber: 1847,
-  /** 제조 정보 */
-  manufacturedAt: "2026.01.15",
 };
 
 export const musicVideo = {
@@ -118,9 +113,3 @@ export const tagBackground: string | null = "/photos/bg.jpg";
  */
 export const tagBackgroundPortrait: string | null = "/photos/bg-portrait.jpg";
 
-/** 첫 태그 시 재생되는 인사 메시지 (실제 음성 파일로 교체) */
-export const welcomeMessage = {
-  duration: "0:07",
-  /** /public 에 음성 파일을 넣고 경로를 지정하면 실제 재생됩니다 */
-  audioSrc: null as string | null,
-};

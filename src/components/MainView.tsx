@@ -9,9 +9,17 @@ import {
   socialLinks,
   store,
 } from "@/lib/content";
-import { daysTogether, formatDate, type Ownership } from "@/lib/useOwnership";
+import { daysTogether, formatDate, type Ownership } from "@/lib/useTagSession";
 
-export default function MainView({ ownership }: { ownership: Ownership }) {
+export default function MainView({
+  ownership,
+  serialNumber,
+}: {
+  ownership: Ownership;
+  /** 태그에서 확인된 고유 번호. 없으면 content.ts 기본값을 씁니다 */
+  serialNumber: number | null;
+}) {
+  const serial = serialNumber ?? keyring.serialNumber;
   const [openPhoto, setOpenPhoto] = useState<number | null>(null);
   /** 파일이 아직 없거나 경로가 틀린 사진 — 샘플 비주얼로 되돌립니다 */
   const [brokenPhotos, setBrokenPhotos] = useState<number[]>([]);
@@ -29,13 +37,12 @@ export default function MainView({ ownership }: { ownership: Ownership }) {
       {/* pb는 하단에 떠 있는 "처음부터 다시 시연" 버튼을 피하기 위한 여백입니다 */}
       <div className="no-scrollbar min-h-0 flex-1 overflow-y-auto px-6 pt-5 pb-24">
         {/* 소유 배지 */}
-        {/* 작은 글씨에서는 foil 그라데이션이 오히려 읽기 어려워 단색을 씁니다 */}
         <div className="flex items-center justify-between rounded-full border border-white/16 bg-ink-3 py-2.5 pl-4 pr-3.5">
           <span
             className="engrave text-[15px] text-rose"
             style={{ fontWeight: 900 }}
           >
-            No.{keyring.serialNumber.toLocaleString()}
+            No.{serial.toLocaleString()}
           </span>
           <span className="text-[12.5px] font-medium text-chalk/85">
             {days === 0 ? "오늘부터 함께" : `함께한 지 ${days}일`}

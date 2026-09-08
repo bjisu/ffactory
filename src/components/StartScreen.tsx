@@ -9,7 +9,16 @@ import { artist, keyring } from "@/lib/content";
  * 안에만 두면 태블릿·데스크톱에서 사진 위에 좁은 검은 띠만 생깁니다.
  * 글자와 버튼은 z-10으로 배경 위에 올립니다.
  */
-export default function StartScreen({ onStart }: { onStart: () => void }) {
+export default function StartScreen({
+  onStart,
+  submitting = false,
+  error = null,
+}: {
+  onStart: () => void;
+  /** 등록 요청 진행 중 — 버튼 중복 클릭을 막습니다 */
+  submitting?: boolean;
+  error?: string | null;
+}) {
   return (
     <>
       {/* 로고가 놓이는 위쪽 */}
@@ -52,10 +61,14 @@ export default function StartScreen({ onStart }: { onStart: () => void }) {
           >
             <button
               onClick={onStart}
-              className="glow w-full rounded-full bg-rose py-4 text-[15px] font-semibold text-ink transition active:scale-[0.985]"
+              disabled={submitting}
+              className="glow w-full rounded-full bg-rose py-4 text-[15px] font-semibold text-ink transition active:scale-[0.985] disabled:opacity-70"
             >
-              등록하기
+              {submitting ? "등록 중…" : "등록하기"}
             </button>
+            {error && (
+              <p className="mt-3 text-center text-[12px] text-rose">{error}</p>
+            )}
           </div>
         </div>
       </div>
