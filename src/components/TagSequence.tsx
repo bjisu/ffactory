@@ -33,7 +33,7 @@ export default function TagSequence({ onRegister }: { onRegister: () => void }) 
           {/* 기본 딤 — 정보량이 많은 인증 화면에서 더 진하게 */}
           <div
             className="absolute inset-0 bg-black transition-opacity duration-700"
-            style={{ opacity: phase === "verified" ? 0.9 : 0.72 }}
+            style={{ opacity: phase === "verified" ? 0.84 : 0.72 }}
           />
           {/* 아래로 갈수록 진해지는 그라데이션 */}
           <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/55 to-black/92" />
