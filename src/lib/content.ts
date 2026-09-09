@@ -113,3 +113,20 @@ export const tagBackground: string | null = "/photos/bg.jpg";
  */
 export const tagBackgroundPortrait: string | null = "/photos/bg-portrait.jpg";
 
+/**
+ * 시연용 — 이미 다른 사람이 등록한 키링을 태그했을 때의 화면을 흉내 냅니다.
+ *
+ * true로 바꾸면 등록하기 화면 대신 "이미 등록된 키링입니다" 화면이 나옵니다.
+ * 화면 하단의 토글 버튼으로도 켜고 끌 수 있습니다.
+ *
+ * 실제 서비스에서는 이 값이 아니라 서버가 칩 번호별 등록 상태를 확인해
+ * 응답합니다. 아래 등록일과 경과 일수도 서버에서 내려오는 값입니다.
+ */
+export const demoAlreadyRegistered = false;
+
+/** 위 화면에 표시할 등록 정보 (시연용 고정값) */
+export const demoRegistration = {
+  registeredAt: "2026.08.14",
+  daysTogether: 26,
+};
+
